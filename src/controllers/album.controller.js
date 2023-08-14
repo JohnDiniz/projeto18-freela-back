@@ -11,7 +11,7 @@ import {
   getAlbumByIdDB,
   addAlbumDB,
   updateAlbumDB,
-} from "../repositories/album.repository.js"; // Import album-related functions
+} from "../repositories/album.repository.js";
 
 export async function getAlbums(req, res) {
   try {
@@ -23,7 +23,7 @@ export async function getAlbums(req, res) {
 }
 
 export async function getAlbumById(req, res) {
-  const albumId = req.params.id; // Assuming you extract the album ID from the URL parameters
+  const albumId = req.params.id;
 
   try {
     const album = await getAlbumByIdDB(albumId);
@@ -37,7 +37,7 @@ export async function getAlbumById(req, res) {
 }
 
 export async function addAlbum(req, res) {
-  const { title, categories, description, img, price } = req.body; // Added 'img' property
+  const { title, categories, description, imgurl, price } = req.body;
 
   try {
     const album = {
@@ -45,13 +45,12 @@ export async function addAlbum(req, res) {
       title,
       categories,
       description,
-      img, // Added 'img' property
+      imgurl,
       sold: false,
       price,
     };
 
-    await addAlbumDB(album); // Assuming you have a function to add an album to the database
-
+    await addAlbumDB(album);
     res.status(201).send({ message: "Álbum adicionado com sucesso!" });
   } catch (err) {
     res.status(500).send(err.message);
@@ -59,8 +58,8 @@ export async function addAlbum(req, res) {
 }
 
 export async function updateAlbum(req, res) {
-  const albumId = req.params.id; // Assuming you extract the album ID from the URL parameters
-  const { title, categories, description, img, price, sold } = req.body;
+  const albumId = req.params.id;
+  const { title, categories, description, imgurl, price, sold } = req.body;
 
   try {
     const existingAlbum = await getAlbumByIdDB(albumId);
@@ -73,7 +72,7 @@ export async function updateAlbum(req, res) {
       title,
       categories,
       description,
-      img,
+      imgurl,
       sold: sold !== undefined ? sold : existingAlbum.sold,
       price,
     };

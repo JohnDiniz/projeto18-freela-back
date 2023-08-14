@@ -8,7 +8,7 @@ import {
 import { createSessionDB } from "../repositories/auth.repository.js";
 
 export async function signUp(req, res) {
-  const { name, email, password } = req.body;
+  const { name, email, password, imgurl } = req.body;
 
   try {
     const user = await getUserByEmailDB(email);
@@ -16,9 +16,9 @@ export async function signUp(req, res) {
       return res.status(409).send({ message: "E-mail já foi cadastrado!" });
 
     const hash = bcrypt.hashSync(password, 10);
-    await createUserDB(name, email, hash);
+    const userId = await createUserDB(name, email, hash, imgurl);
 
-    res.sendStatus(201);
+    res.status(201).send({ message: "User created" });
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -61,6 +61,7 @@ export async function getUserInfo(req, res) {
       name: user.rows[0].name,
       email: user.rows[0].email,
       createdAt: user.rows[0].createdAt,
+      imgurl: user.rows[0].imgurl,
     };
 
     res.send(userInfo);

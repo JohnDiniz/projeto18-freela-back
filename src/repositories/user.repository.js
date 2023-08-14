@@ -19,10 +19,10 @@ export function getCompleteUserDB(userId) {
   );
 }
 
-export function createUserDB(name, email, password) {
+export function createUserDB(name, email, password, imgurl) {
   return db.query(
-    `INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`,
-    [name, email, password]
+    `INSERT INTO users (name, email, password, imgurl) VALUES ($1, $2, $3, $4);`,
+    [name, email, password, imgurl]
   );
 }
 

@@ -23,13 +23,13 @@ export async function getAlbumByIdDB(albumId) {
 export async function addAlbumDB(album) {
   try {
     const query =
-      "INSERT INTO albums (id, title, categories, description, img, sold, price) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+      "INSERT INTO albums (id, title, categories, description, imgurl, sold, price) VALUES ($1, $2, $3, $4, $5, $6, $7)";
     const values = [
       album.id,
       album.title,
       album.categories,
       album.description,
-      album.img,
+      album.imgurl,
       album.sold,
       album.price,
     ];
@@ -43,13 +43,13 @@ export async function addAlbumDB(album) {
 export async function updateAlbumDB(album) {
   try {
     const query =
-      "UPDATE albums SET title = $2, categories = $3, description = $4, img = $5, sold = $6, price = $7 WHERE id = $1";
+      "UPDATE albums SET title = $2, categories = $3, description = $4, imgurl = $5, sold = $6, price = $7 WHERE id = $1";
     const values = [
       album.id,
       album.title,
       album.categories,
       album.description,
-      album.img,
+      album.imgurl,
       album.sold,
       album.price,
     ];
