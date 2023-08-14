@@ -11,6 +11,7 @@ import {
   getAlbumByIdDB,
   addAlbumDB,
   updateAlbumDB,
+  searchAlbumsDB,
 } from "../repositories/album.repository.js";
 
 export async function getAlbums(req, res) {
@@ -80,6 +81,17 @@ export async function updateAlbum(req, res) {
     await updateAlbumDB(updatedAlbum);
 
     res.send({ message: "Álbum atualizado com sucesso!" });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
+export async function searchAlbums(req, res) {
+  const searchTerm = req.query.q;
+
+  try {
+    const albums = await searchAlbumsDB(searchTerm);
+    res.send(albums);
   } catch (err) {
     res.status(500).send(err.message);
   }

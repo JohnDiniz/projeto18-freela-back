@@ -59,3 +59,18 @@ export async function updateAlbumDB(album) {
     throw err;
   }
 }
+
+export async function searchAlbumsDB(searchTerm) {
+  try {
+    const query = `
+      SELECT * FROM albums
+      WHERE title ILIKE $1 OR description ILIKE $1
+    `;
+    const values = [`%${searchTerm}%`];
+
+    const { rows } = await db.query(query, values);
+    return rows;
+  } catch (err) {
+    throw err;
+  }
+}
